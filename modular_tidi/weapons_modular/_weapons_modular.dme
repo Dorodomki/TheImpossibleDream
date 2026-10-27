@@ -1,1 +1,2 @@
 #include "code\unarmed_weapons.dm"
+#include "code\modular_weapons.dm"

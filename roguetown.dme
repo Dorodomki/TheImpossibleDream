@@ -1396,8 +1396,6 @@
 #include "code\game\objects\items\rogueweapons\melee\whip.dm"
 #include "code\game\objects\items\rogueweapons\melee\axe\axe_intents.dm"
 #include "code\game\objects\items\rogueweapons\melee\axe\axes.dm"
-#include "code\game\objects\items\rogueweapons\melee\axe\modular_axe.dm"
-#include "code\game\objects\items\rogueweapons\modular_blunt.dm"
 #include "code\game\objects\items\rogueweapons\melee\knives\templar_knives.dm"
 #include "code\game\objects\items\rogueweapons\melee\polearms\lance.dm"
 #include "code\game\objects\items\rogueweapons\melee\polearms\polearms.dm"
