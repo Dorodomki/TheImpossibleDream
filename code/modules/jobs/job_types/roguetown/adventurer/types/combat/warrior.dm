@@ -348,7 +348,7 @@
 			r_hand = /obj/item/rogueweapon/huntingknife/combat/bronze
 			l_hand = /obj/item/rogueweapon/huntingknife/combat/bronze
 			ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
-		if("Dual wielder Bronze hatchets")
+		if("Dual Bronze Hatchets")
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			r_hand = /obj/item/rogueweapon/stoneaxe/handaxe/bronze
 			l_hand = /obj/item/rogueweapon/stoneaxe/handaxe/bronze
