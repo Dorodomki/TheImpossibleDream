@@ -341,7 +341,7 @@
 			r_hand = /obj/item/rogueweapon/sword/short/gladius
 			l_hand = /obj/item/rogueweapon/sword/short/gladius
 			ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
-		if("Dual wielder Bronze knives")
+		if("Dual Bronze Knives")
 			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			beltr = /obj/item/rogueweapon/scabbard/sheath
 			beltl = /obj/item/rogueweapon/scabbard/sheath
