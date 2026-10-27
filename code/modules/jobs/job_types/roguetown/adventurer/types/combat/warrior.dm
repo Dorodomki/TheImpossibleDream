@@ -302,7 +302,7 @@
 			ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 			r_hand = /obj/item/rogueweapon/katar/bronze
 			gloves = /obj/item/clothing/gloves/roguetown/bandages
-		if("2handed Bronze Axe")
+		if("Bronze Greataxe")
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			r_hand = /obj/item/rogueweapon/greataxe/bronze
 			backr = /obj/item/rogueweapon/scabbard/gwstrap
