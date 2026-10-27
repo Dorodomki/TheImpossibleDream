@@ -294,7 +294,7 @@
 		if(helmchoice != "None")
 			head = helmets[helmchoice]
 
-	var/weapons = list("Bronze Katar","2handed Bronze Longsword","2handed Bronze Axe","Bronze Mace","Bronze Spear","Bronze Flail","Discipline - Whiphunter (+I PER / -I SPD)","Discipline - Unarmed","Discipline - Bodybuilder", "Dual wielder Bronze Swords","Dual wielder Bronze knives","Dual wielder Bronze hatchets")
+	var/weapons = list("Bronze Katar","Spatha","Bronze Greataxe","Bronze Greatclub","Bronze Spear","Bronze Flail","Discipline - Whiphunter (+I PER / -I SPD)","Discipline - Unarmed","Discipline - Bodybuilder", "Dual Gladius","Dual Bronze Knives","Dual Bronze Hatchets")
 	var/weapon_choice = input(H, "Choose your WEAPON.", "TAKE UP ARMS.") as anything in weapons
 	switch(weapon_choice)
 		if("Bronze Katar")
@@ -302,15 +302,15 @@
 			ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 			r_hand = /obj/item/rogueweapon/katar/bronze
 			gloves = /obj/item/clothing/gloves/roguetown/bandages
-		if("2handed Bronze Axe")
+		if("Bronze Greataxe")
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			r_hand = /obj/item/rogueweapon/greataxe/bronze
 			backr = /obj/item/rogueweapon/scabbard/gwstrap
-		if("2handed Bronze Longsword")
+		if("Spatha")
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			beltr = /obj/item/rogueweapon/scabbard/sword
 			r_hand = /obj/item/rogueweapon/sword/long/broadsword/bronze
-		if("Bronze Mace")
+		if("Bronze Greatclub")
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			r_hand = /obj/item/rogueweapon/mace/goden/bronze
 			backr = /obj/item/rogueweapon/scabbard/gwstrap
@@ -334,28 +334,28 @@
 			H.adjust_skillrank_up_to(/datum/skill.combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			r_hand = /obj/item/rogueweapon/greatsword/iron
 			backr = /obj/item/rogueweapon/scabbard/gwstrap
-		if("Dual wielder Bronze Swords")
+		if("Dual Gladius")
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			beltr = /obj/item/rogueweapon/scabbard/sword
 			beltl = /obj/item/rogueweapon/scabbard/sword
 			r_hand = /obj/item/rogueweapon/sword/short/gladius
 			l_hand = /obj/item/rogueweapon/sword/short/gladius
 			ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
-		if("Dual wielder Bronze knives")
+		if("Dual Bronze Knives")
 			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			beltr = /obj/item/rogueweapon/scabbard/sheath
 			beltl = /obj/item/rogueweapon/scabbard/sheath
 			r_hand = /obj/item/rogueweapon/huntingknife/combat/bronze
 			l_hand = /obj/item/rogueweapon/huntingknife/combat/bronze
 			ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
-		if("Dual wielder Bronze hatchets")
+		if("Dual Bronze Hatchets")
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			r_hand = /obj/item/rogueweapon/stoneaxe/handaxe/bronze
 			l_hand = /obj/item/rogueweapon/stoneaxe/handaxe/bronze
 			ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
 
 //ARMOR AND CLOTHES
-	neck = /obj/item/clothing/neck/roguetown/gorget/copper //i forgot i made this armor in 2023 so im adding it
+	neck = /obj/item/clothing/neck/roguetown/gorget/bronze
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/hide // main armor they can go fixing with their roundstart patch kit if they ready up, can be upgraded and hides the boob barbarians roundstart.
 	shirt = /obj/item/clothing/suit/roguetown/armor/manual/resting/body/barbarian //hardened skin as a shirt armor, limits how much they can be armed since they are a dps class
 	belt = /obj/item/storage/belt/rogue/leather/battleskirt/barbarian
