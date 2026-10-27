@@ -88,29 +88,47 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 				r_hand = /obj/item/rogueweapon/flail/peasantwarflail/iron
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
-		var/armors = list("Chainmaille Set","Iron Breastplate","Gambeson & Helmet","Light Raneshi Armor")
+
+	if(H.mind)
+		to_chat(H, span_warning("Pick your helmet!"))
+		var/helmets = list(
+			"Sallet helmet"			= /obj/item/clothing/head/roguetown/helmet/sallet/iron,
+			"Kettle helmet"	= /obj/item/clothing/head/roguetown/helmet/kettle/iron,
+			"Skullcap helmet"	= /obj/item/clothing/head/roguetown/helmet/skullcap,
+			"Nasal helmet"		= /obj/item/clothing/head/roguetown/helmet/nasal/iron,
+			"Winged helmet"		= /obj/item/clothing/head/roguetown/helmet/winged/iron,
+			"Horned iron helmet" = /obj/item/clothing/head/roguetown/helmet/horned,
+			"Bascinet helmet" = /obj/item/clothing/head/roguetown/helmet/bascinet/iron,
+			"None"
+			)
+		var/helmchoice = input(H, "Choose your Helm.", "TAKE UP HELMS") as anything in helmets
+		if(helmchoice != "None")
+			head = helmets[helmchoice]
+
+		var/armors = list("Chainmail Armor","Plate Armor","Splinted Armor","Light Raneshi Armor")
 		var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMOR") as anything in armors
 		switch(armor_choice)
-			if("Chainmaille Set")
+			if("Chainmail Armor")
 				armor = /obj/item/clothing/suit/roguetown/armor/chainmail/iron
-				shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/random//giving them something to wear under their armors
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 				pants = /obj/item/clothing/under/roguetown/chainlegs/iron
+				wrists = /obj/item/clothing/wrists/roguetown/bracers/iron/chain
 				neck = /obj/item/clothing/neck/roguetown/chaincoif/iron
 				gloves = /obj/item/clothing/gloves/roguetown/chain/iron
-			if("Iron Breastplate")
+			if("Plate Armor")
 				armor = /obj/item/clothing/suit/roguetown/armor/plate/cuirass/iron
-				neck = /obj/item/clothing/neck/roguetown/coif/heavypadding
-				shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/random
+				neck = /obj/item/clothing/neck/roguetown/gorget
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 				pants = /obj/item/clothing/under/roguetown/splintlegs
-				gloves = /obj/item/clothing/gloves/roguetown/angle
-			if("Gambeson & Helmet")
-				armor = /obj/item/clothing/suit/roguetown/armor/gambeson
-				neck = /obj/item/clothing/neck/roguetown/coif/padded//neck cover
-				shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/random
+				wrists = /obj/item/clothing/wrists/roguetown/bracers/iron
+				gloves = /obj/item/clothing/gloves/roguetown/plate/iron
+			if("Splinted Armor")
+				armor = /obj/item/clothing/suit/roguetown/armor/leather/studded
+				neck = /obj/item/clothing/neck/roguetown/chaincoif/iron
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/lord
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/splint//adding it since this set feels far too weak compared to the other two, gets one helmet and arm cover at least
-				pants = /obj/item/clothing/under/roguetown/trou/leather
-				head = /obj/item/clothing/head/roguetown/helmet/kettle
-				gloves = /obj/item/clothing/gloves/roguetown/angle
+				pants = /obj/item/clothing/under/roguetown/splintlegs
+				gloves = /obj/item/clothing/gloves/roguetown/chain/iron
 			if("Light Raneshi Armor")
 				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/raneshen
 				pants = /obj/item/clothing/under/roguetown/trou/leather/pontifex/raneshen
@@ -125,7 +143,8 @@
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/needle/thorn = 1,
 		)
 
 /datum/advclass/sfighter/duelist
@@ -222,7 +241,8 @@
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/needle/thorn = 1,
 		)
 
 /datum/advclass/sfighter/barbarian
@@ -249,8 +269,7 @@
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 	)
-	extra_context = "This subclass has three disciplines to choose from: one provides Expert skills in fistfighting and the 'Expert Pugilist' trait, the other provides unique equipment and a one-point exchange of Speed for Perception,\
-						and the final one grants you a greatsword and a special form of armor while taking away three points of intelligence."
+	extra_context = "This subclass design is based on dealing damage, you got a skin armor in your shirt slot locking you from mixing different light armor types, there are two types of disciplines to pick up on armaments, two handed weapons and dual wielder options, the bodybuilder from previous code stills exists, while new options are up, no shield and no ranged skills for your class, javelins and trowing knifes are your best hope."
 
 /datum/outfit/job/roguetown/adventurer/barbarian/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	..()
@@ -261,70 +280,89 @@
 	if(!H.mind)
 		return
 
-	var/weapons = list("Bronze Katar","Bronze Sword","Bronze Axe","Bronze Mace","Bronze Spear","Bronze Flail","Discipline - Whiphunter (+I PER / -I SPD)","Discipline - Unarmed","Discipline - Bodybuilder")
+	if(H.mind)
+		to_chat(H, span_warning("Pick your helmet for your high adventure!"))
+		var/helmets = list(
+			"Horned iron Helmet"			= /obj/item/clothing/head/roguetown/helmet/horned,
+			"Saiga Skull Helmet"	= /obj/item/clothing/head/roguetown/helmet/leather/saiga,
+			"Roughspun Headband"	= /obj/item/clothing/head/roguetown/headband/monk/barbarian,
+			"Volf Helmet"		= /obj/item/clothing/head/roguetown/helmet/leather/volfhelm,
+			"Winged Helmet"		= /obj/item/clothing/head/roguetown/helmet/winged/iron,
+			"None"
+			)
+		var/helmchoice = input(H, "Choose your Helm.", "TAKE UP HELMS") as anything in helmets
+		if(helmchoice != "None")
+			head = helmets[helmchoice]
+
+	var/weapons = list("Bronze Katar","2handed Bronze Longsword","2handed Bronze Axe","Bronze Mace","Bronze Spear","Bronze Flail","Discipline - Whiphunter (+I PER / -I SPD)","Discipline - Unarmed","Discipline - Bodybuilder", "Dual wielder Bronze Swords","Dual wielder Bronze knives","Dual wielder Bronze hatchets")
 	var/weapon_choice = input(H, "Choose your WEAPON.", "TAKE UP ARMS.") as anything in weapons
 	switch(weapon_choice)
 		if("Bronze Katar")
 			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
-			head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
+			ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 			r_hand = /obj/item/rogueweapon/katar/bronze
 			gloves = /obj/item/clothing/gloves/roguetown/bandages
-		if("Bronze Axe")
+		if("2handed Bronze Axe")
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
-			head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
-			r_hand = /obj/item/rogueweapon/stoneaxe/woodcut/bronze
-			gloves = /obj/item/clothing/gloves/roguetown/bandages
-		if("Bronze Sword")
+			r_hand = /obj/item/rogueweapon/greataxe/bronze
+			backr = /obj/item/rogueweapon/scabbard/gwstrap
+		if("2handed Bronze Longsword")
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
-			head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
 			beltr = /obj/item/rogueweapon/scabbard/sword
-			r_hand = /obj/item/rogueweapon/sword/bronze
-			gloves = /obj/item/clothing/gloves/roguetown/bandages
+			r_hand = /obj/item/rogueweapon/sword/long/broadsword/bronze
 		if("Bronze Mace")
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
-			head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
-			r_hand = /obj/item/rogueweapon/mace/bronze
-			gloves = /obj/item/clothing/gloves/roguetown/bandages
+			r_hand = /obj/item/rogueweapon/mace/goden/bronze
+			backr = /obj/item/rogueweapon/scabbard/gwstrap
 		if("Bronze Spear")
-			// Boar huntah
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
-			H.adjust_skillrank(/datum/skill/misc/hunting, SKILL_LEVEL_NOVICE, TRUE)
-			H.adjust_skillrank(/datum/skill/labor/butchering, SKILL_LEVEL_NOVICE, TRUE)
-			ADD_TRAIT(H, TRAIT_EXPERT_HUNTER, TRAIT_GENERIC)
-			head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
 			r_hand = /obj/item/rogueweapon/spear/bronze
-			gloves = /obj/item/clothing/gloves/roguetown/bandages
 			backr = /obj/item/rogueweapon/scabbard/gwstrap
 		if("Bronze Flail")
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
-			head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
 			r_hand = /obj/item/rogueweapon/flail/bronze
-			gloves = /obj/item/clothing/gloves/roguetown/bandages
 		if("Discipline - Whiphunter (+I PER / -I SPD)")
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
-			head = /obj/item/clothing/head/roguetown/headband/monk/barbarian
-			armor = /obj/item/clothing/suit/roguetown/armor/leather/hide
 			r_hand = /obj/item/rogueweapon/whip/bronze
-			gloves = /obj/item/clothing/gloves/roguetown/bandages
 			H.change_stat(STATKEY_SPD, -1) //Little more protection, little less speed.
 			H.change_stat(STATKEY_PER, 1) //Allows for more critical usage of the Whip's strengths.
 		if ("Discipline - Unarmed")
 			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
+			r_hand = /obj/item/clothing/gloves/roguetown/knuckles/bronze
 			ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
-			head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
-			gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
-			armor = /obj/item/clothing/suit/roguetown/armor/manual/resting/chest/barbarian //a leather armor.
-			shirt = /obj/item/clothing/suit/roguetown/armor/manual/resting/body/barbarian //a gambeson. The skin armor options start better protected, but cannot upgrade. A basic gamby + leather armor will match them, and heavy gamby + light brig will eclipse them significantly.
-		if ("Discipline - Bodybuilder") //Better starting protection than the bronze sword option, but cannot upgrade to brigandine.
+		if ("Discipline - Bodybuilder")
 			H.adjust_skillrank_up_to(/datum/skill.combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
-			armor = /obj/item/clothing/suit/roguetown/armor/manual/resting/chest/barbarian //a leather armor.
-			shirt = /obj/item/clothing/suit/roguetown/armor/manual/pushups/barbarian //a fullbody leather armor.
 			r_hand = /obj/item/rogueweapon/greatsword/iron
 			backr = /obj/item/rogueweapon/scabbard/gwstrap
+		if("Dual wielder Bronze Swords")
+			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			beltr = /obj/item/rogueweapon/scabbard/sword
+			beltl = /obj/item/rogueweapon/scabbard/sword
+			r_hand = /obj/item/rogueweapon/sword/short/gladius
+			l_hand = /obj/item/rogueweapon/sword/short/gladius
+			ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
+		if("Dual wielder Bronze knives")
+			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			beltr = /obj/item/rogueweapon/scabbard/sheath
+			beltl = /obj/item/rogueweapon/scabbard/sheath
+			r_hand = /obj/item/rogueweapon/huntingknife/combat/bronze
+			l_hand = /obj/item/rogueweapon/huntingknife/combat/bronze
+			ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
+		if("Dual wielder Bronze hatchets")
+			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			r_hand = /obj/item/rogueweapon/stoneaxe/handaxe/bronze
+			l_hand = /obj/item/rogueweapon/stoneaxe/handaxe/bronze
+			ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
+
+//ARMOR AND CLOTHES
+	neck = /obj/item/clothing/neck/roguetown/gorget/copper //i forgot i made this armor in 2023 so im adding it
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/hide // main armor they can go fixing with their roundstart patch kit if they ready up, can be upgraded and hides the boob barbarians roundstart.
+	shirt = /obj/item/clothing/suit/roguetown/armor/manual/resting/body/barbarian //hardened skin as a shirt armor, limits how much they can be armed since they are a dps class
 	belt = /obj/item/storage/belt/rogue/leather/battleskirt/barbarian
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/bronzeskirt
 	shoes = /obj/item/clothing/shoes/roguetown/boots/furlinedboots
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
+	gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
 	if(should_wear_masc_clothes(H))
 		H.dna.species.soundpack_m = GLOB.voice_packs[/datum/voicepack/male/warrior]
 	if(should_wear_femme_clothes(H))
@@ -336,6 +374,7 @@
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/rogueweapon/huntingknife/bronze = 1,
+		/obj/item/needle/thorn = 1,
 		)
 
 /datum/advclass/sfighter/ironclad
@@ -420,6 +459,7 @@
 				neck = /obj/item/clothing/neck/roguetown/gorget
 				pants = /obj/item/clothing/under/roguetown/tights/black
 
+	mask = /obj/item/clothing/head/roguetown/armingcap
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/iron
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
 	belt = /obj/item/storage/belt/rogue/leather/battleskirt/black
@@ -428,11 +468,12 @@
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/repair_kit/metal/bad = 1,
+		/obj/item/needle/thorn = 1,
 		)
 	H.dna.species.soundpack_m = GLOB.voice_packs[/datum/voicepack/male/warrior]
 	H.set_blindness(0)
 	if(H.mind)
-		var/weapons = list("Executioner's Sword","Bastard Sword","Broadsword","Warhammer + Shield","Flail + Shield","Studded Flail + Shield","Lucerne","Greataxe","Greatflail","Banded Sword + Shield")
+		var/weapons = list("Executioner's Sword","Bastard Sword","Broadsword","Warhammer + Shield","Flail + Shield","Studded Flail + Shield","Lucerne","Greataxe","Greatflail","Banded Sword + Shield","Goedendag","Messer + Shield")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Executioner's Sword")
@@ -450,7 +491,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				beltr = /obj/item/rogueweapon/mace/warhammer
-				backr = /obj/item/rogueweapon/shield/iron
+				backr = /obj/item/rogueweapon/shield/tower
 			if("Flail + Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
@@ -460,7 +501,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				beltr = /obj/item/rogueweapon/flail/alt
-				backr = /obj/item/rogueweapon/shield/iron
+				backr = /obj/item/rogueweapon/shield/tower
 			if("Greatflail")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/flail/peasantwarflail/iron
@@ -477,7 +518,16 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				beltr = /obj/item/rogueweapon/sword/short/iron/banded
-				backr = /obj/item/rogueweapon/shield/iron
+				backr = /obj/item/rogueweapon/shield/tower
+			if("Messer + Shield")
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				beltr = /obj/item/rogueweapon/sword/short/messer/iron
+				backr = /obj/item/rogueweapon/shield/tower
+			if("Goedendag")
+				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				r_hand = /obj/item/rogueweapon/mace/goden
+				backr = /obj/item/rogueweapon/scabbard/gwstrap
 
 /datum/advclass/sfighter/mhunter
 	name = "Exorcist"
@@ -695,6 +745,7 @@
 		/obj/item/flashlight/flare/torch/metal = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/needle/thorn = 1,
 		)
 
 	H.set_blindness(0)
