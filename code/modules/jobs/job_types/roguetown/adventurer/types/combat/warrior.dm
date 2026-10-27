@@ -355,7 +355,7 @@
 			ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
 
 //ARMOR AND CLOTHES
-	neck = /obj/item/clothing/neck/roguetown/gorget/copper //i forgot i made this armor in 2023 so im adding it
+	neck = /obj/item/clothing/neck/roguetown/gorget/bronze
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/hide // main armor they can go fixing with their roundstart patch kit if they ready up, can be upgraded and hides the boob barbarians roundstart.
 	shirt = /obj/item/clothing/suit/roguetown/armor/manual/resting/body/barbarian //hardened skin as a shirt armor, limits how much they can be armed since they are a dps class
 	belt = /obj/item/storage/belt/rogue/leather/battleskirt/barbarian
