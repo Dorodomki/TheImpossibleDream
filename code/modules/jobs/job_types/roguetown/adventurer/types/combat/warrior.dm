@@ -310,7 +310,7 @@
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			beltr = /obj/item/rogueweapon/scabbard/sword
 			r_hand = /obj/item/rogueweapon/sword/long/broadsword/bronze
-		if("Bronze Mace")
+		if("Bronze Greatclub")
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			r_hand = /obj/item/rogueweapon/mace/goden/bronze
 			backr = /obj/item/rogueweapon/scabbard/gwstrap
