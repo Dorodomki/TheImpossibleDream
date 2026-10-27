@@ -294,7 +294,7 @@
 		if(helmchoice != "None")
 			head = helmets[helmchoice]
 
-	var/weapons = list("Bronze Katar","2handed Bronze Longsword","2handed Bronze Axe","Bronze Mace","Bronze Spear","Bronze Flail","Discipline - Whiphunter (+I PER / -I SPD)","Discipline - Unarmed","Discipline - Bodybuilder", "Dual wielder Bronze Swords","Dual wielder Bronze knives","Dual wielder Bronze hatchets")
+	var/weapons = list("Bronze Katar","Spatha","Bronze Greataxe","Bronze Greatclub","Bronze Spear","Bronze Flail","Discipline - Whiphunter (+I PER / -I SPD)","Discipline - Unarmed","Discipline - Bodybuilder", "Dual Gladius","Dual Bronze Knives","Dual Bronze Hatchets")
 	var/weapon_choice = input(H, "Choose your WEAPON.", "TAKE UP ARMS.") as anything in weapons
 	switch(weapon_choice)
 		if("Bronze Katar")
