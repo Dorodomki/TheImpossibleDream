@@ -3809,4 +3809,5 @@
 #include "modular\piercing\supply.dm"
 #include "modular\ze_genesis_call\genesis_call.dm"
 #include "modular_tidi\global_modules.dm"
+#include "modular_tidi\weapons_modular\code\modular_axe.dm"
 // END_INCLUDE
