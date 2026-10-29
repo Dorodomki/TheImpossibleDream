@@ -1,2 +1,3 @@
 #include "code\unarmed_weapons.dm"
-#include "code\modular_weapons.dm"
+#include "code\modular_blunt.dm"
+#include "code\modular_axe.dm"
