@@ -2182,7 +2182,6 @@
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\combat\rogue.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\combat\spellblade_chant.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\combat\spellfist_chant.dm"
-#include "code\modules\jobs\job_types\roguetown\adventurer\types\combat\warrior.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\migrant\heartfelt\heartfelthand.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\migrant\heartfelt\heartfeltknight.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\migrant\heartfelt\heartfeltlord.dm"
@@ -3809,4 +3808,5 @@
 #include "modular\piercing\supply.dm"
 #include "modular\ze_genesis_call\genesis_call.dm"
 #include "modular_tidi\global_modules.dm"
+#include "modular_tidi\martial_adventurer\code\warriors.dm"
 // END_INCLUDE
