@@ -1,7 +1,7 @@
 Common Adventurers
 Tag: common_adventurers
 
-Created In: # 101
+Created In: # [101](https://github.com/Shadow-Fragger-Metaclique-Gang/TheImpossibleDream/pull/101)
 
 Major changes:
 
